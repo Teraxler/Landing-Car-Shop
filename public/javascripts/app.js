@@ -14,22 +14,60 @@ const closeMenuIcon = document.getElementById("close-menu-icon");
 
 const searchBtn = document.getElementById("search-btn");
 
+const submenuMobileContainer = document.getElementById(
+  "submenu-mobile-container"
+);
+
 //
+const API_URL = "http://127.0.0.1:5500/public/javascripts/db.json";
 const MAX_BRANDS_COUNT = 6;
+const MAX_SWIPER_ITEMS = 12;
 
 let cars, brands, customers, blogs;
 
 // Fetch
 async function fetchData(url, options) {
-  let data;
+  try {
+    const response = await fetch(url, options);
 
-  data = await fetch(url, options);
-  console.log("Data:", data);
+    console.log("Response =>", response);
 
-  data = await data.json();
-  console.log("data =>", data);
+    return await response.json();
+  } catch (error) {
+    console.warn("Error fetch data:", error);
+  }
+}
 
-  return data;
+async function init() {
+  try {
+    const data = await fetchData(API_URL);
+    ({ cars, brands, blogs, customers } = data);
+    renderContent();
+  } catch (error) {
+    console.error("Error initializing app:", error);
+  }
+}
+
+// Objects
+
+class Timer {
+  constructor(fn, time) {
+    this.intervalID = setInterval(fn, time);
+  }
+
+  start(fn, time) {
+    this.intervalID && this.stop();
+    this.intervalID = setInterval(fn, time);
+  }
+
+  stop() {
+    clearInterval(this.intervalID);
+  }
+
+  reset(fn, time) {
+    this.stop();
+    this.start(fn, time);
+  }
 }
 
 // === Functions ===
@@ -52,12 +90,10 @@ function getAllElementsByClass(className) {
 }
 
 function removeClass(className, elm = null) {
-  let elms;
-
   if (elm) {
     elm.classList.remove(className);
   } else {
-    elms = document.getElementsByClassName(className);
+    let elms = document.getElementsByClassName(className);
     for (const elm of elms) {
       elm.classList.remove(className);
     }
@@ -127,22 +163,42 @@ function redirectPage() {
 
   let price, model, brand;
 
-  brand = labelMaker.textContent.trim();
-  model = labelModel.textContent.trim();
-  price = labelPrice.textContent.trim();
+  brand = labelMaker.textContent;
+  model = labelModel.textContent;
+  price = labelPrice.textContent;
+
+  // console.log(normalizeUrl(`http://127.0.0.1:5500/public/index.html?brand=${brand}&model=${model}&price=${price}`));
+  console.log(
+    normalizeUrl(
+      `http://127.0.0.1:5500/public/index.html?${brand}-${model}-${price}`
+    )
+  );
 
   location.replace(
-    `http://127.0.0.1:5500/public/index.html?brand=${brand}&model=${model}&price=${price}`
+    // normalizeUrl(
+      `http://127.0.0.1:5500/public/index.html?${brand.trim()}-${model.trim()}-${price.trim()}`
+    // )
   );
 }
 
-function updateSlidePosition(swiperWrapper, currentIndex) {
+// Need refactor ***
+function normalizeUrl(url) {
+  url = url.trim();
+
+  while (url.includes(" ")) {
+    url = url.replace(" ", "");
+  }
+
+  return url;
+}
+
+function updateSlidePosition(sliderWrapper, currentIndex) {
   let gap = 16;
   // console.log(window.innerWidth);
 
   window.innerWidth >= 768 ? (gap = 30) : (gap = 16);
 
-  swiperWrapper.style.transform = `translateX(calc(-${currentIndex * 100}% - ${
+  sliderWrapper.style.transform = `translateX(calc(-${currentIndex * 100}% - ${
     currentIndex * gap
   }px))`;
 }
@@ -159,46 +215,73 @@ function toggleBookmarkIcon(e) {
   console.log(useElm.getAttribute("href"));
 }
 
+function toggleSubmenu(e) {
+  let submenu = e.currentTarget.children[1];
+
+  // console.log(submenu.classList);
+
+  if (submenu.className.includes("submenu-mobile")) {
+    submenu.classList.toggle("submenu-mobile--show");
+  }
+}
+
+function generateStarRatingClasses(score) {
+  const starCount = 5;
+  const activeStarClass = "text-[#E1C03F]";
+  const inActiveStarClass = "text-gray-300";
+
+  return Array(starCount)
+    .fill(inActiveStarClass)
+    .fill(activeStarClass, 0, Math.floor(score));
+}
+
 // Calculateor
-function calcMaxSlides(amountItems, itemsPerSlide) {
-  return Math.ceil(amountItems / itemsPerSlide);
+function calcMaxSlides(countItems, itemsPerSlide) {
+  return Math.ceil(countItems / itemsPerSlide);
 }
 
 function calcDiscount(price, percent) {
-  percent = percent > 100 ? 100 : percent;
+  percent =
+    percent >= 0 && percent <= 100
+      ? percent
+      : percent > 100
+      ? 100
+      : percent < 0
+      ? 0
+      : null;
 
   return price - (price * percent) / 100;
 }
 
-function calcAmountItemsPerSlide(swiperId) {
+function calcItemsPerSlide(sliderId) {
   let itemsPerSlide,
     windowWidth = window.innerWidth;
 
-  if (swiperId === "all-vehicles-wrapper") {
-    console.log(windowWidth);
+  if (sliderId === "all-vehicles-wrapper") {
+    // console.log(windowWidth);
 
     if (windowWidth >= 1280) {
       itemsPerSlide = 4;
-      console.log("items", itemsPerSlide);
+      // console.log("items", itemsPerSlide);
     } else if (windowWidth >= 768) {
       itemsPerSlide = 3;
-      console.log("items", itemsPerSlide);
+      // console.log("items", itemsPerSlide);
     } else if (windowWidth >= 480) {
       itemsPerSlide = 2;
-      console.log("items", itemsPerSlide);
+      // console.log("items", itemsPerSlide);
     } else {
       itemsPerSlide = 1;
-      console.log("items", itemsPerSlide);
+      // console.log("items", itemsPerSlide);
     }
-  } else if (swiperId === "popular-makers-wrapper") {
+  } else if (sliderId === "popular-makers-wrapper") {
     if (windowWidth >= 768) {
       itemsPerSlide = 2;
-      console.log("items", itemsPerSlide);
+      // console.log("items", itemsPerSlide);
     } else {
       itemsPerSlide = 1;
-      console.log("items", itemsPerSlide);
+      // console.log("items", itemsPerSlide);
     }
-  } else if (swiperId === "comments-wrapper") {
+  } else if (sliderId === "comments-wrapper") {
     itemsPerSlide = 1;
   }
 
@@ -207,21 +290,25 @@ function calcAmountItemsPerSlide(swiperId) {
 
 // Render
 function renderContent() {
-  renderSwipers();
-  renderCarBrandsOfSrachBox();
-  renderPermiumBrands();
-  renderAllVeihcles();
-  renderPopularMakers();
-  renderUserComments();
-  renderCarBrands();
-  renderBlogs();
+  const renderFunctions = [
+    renderSliders,
+    renderCarBrandsOfSearchBox,
+    renderPermiumBrands,
+    renderAllVeihcles,
+    renderPopularMakers,
+    renderUserComments,
+    renderCarBrands,
+    renderBlogs,
+  ];
+
+  renderFunctions.forEach((fn) => fn());
 
   const bookmarks = getAllElementsByClass("bookmark");
   // console.log("🚀 ~ renderContent ~ bookmarks:", bookmarks)
 
-  for (const bookmark of bookmarks) {
+  bookmarks.forEach((bookmark) => {
     bookmark.addEventListener("click", toggleBookmarkIcon);
-  }
+  });
 }
 
 function renderPermiumBrands() {
@@ -234,8 +321,7 @@ function renderPermiumBrands() {
 
     permiumBrandsWrapper.insertAdjacentHTML(
       "beforeend",
-      `
-          <a href="${link}"
+      `<a href="${link}"
               class="bg-white text-center border py-4 xl:py-6.5 border-gray-200 rounded-2xl">
             <div class="flex items-center justify-center max-w-full size-25 px-2 sm:px-0 mx-auto">
               <img
@@ -250,32 +336,27 @@ function renderPermiumBrands() {
 }
 
 function renderAllVeihcles() {
-  const allVehiclesContainer = document.getElementById("all-vehicles-wrapper");
+  const Container = document.getElementById("all-vehicles-wrapper");
 
-  allVehiclesContainer.dataset.amountItems =
-    cars.length > 16 ? 16 : cars.length;
+  Container.dataset.countItems = Math.min(cars.length, MAX_SWIPER_ITEMS);
 
-  for (const car of cars) {
-    const {
-      year,
-      model,
-      price,
-      engine,
-      images,
-      topSpeed,
-      fuelType,
-      transmission,
-      manufacturer,
-    } = car;
-
-    console.log("Car:", car);
-
-    allVehiclesContainer.insertAdjacentHTML(
-      "beforeend",
-      `
-            <div class="flex justify-center w-full xs:w-[calc(50%-8.034px)] md:w-[calc(33.333333%-20.067px)] xl:w-[calc(25%-22.534px)] shrink-0">
+  Container.innerHTML = cars
+    .slice(0, MAX_SWIPER_ITEMS)
+    .map(
+      ({
+        engine,
+        year,
+        price,
+        images,
+        model,
+        topSpeed,
+        fuelType,
+        transmission,
+        manufacturer,
+      }) => `
+          <div class="flex justify-center w-full xs:w-[calc(50%-8.034px)] md:w-[calc(33.333333%-20.067px)] xl:w-[calc(25%-22.534px)] shrink-0">
             <div class="w-full max-w-80 xs:max-w-full shrink-0 rounded-2xl overflow-hidden">
-            <a href="#" class="block relative">
+            <a href="#${manufacturer}-${model}-${year}" class="block relative">
                 <img class="w-full max-h-[218px]"
                   src="${images[0]}"
                   alt="${manufacturer} ${model} – ${year}"/>
@@ -283,8 +364,7 @@ function renderAllVeihcles() {
                   class="absolute top-3 lg:top-6 left-2 lg:left-5 flex items-center justify-center bg-green-600 text-white text-xs lg:text-parent w-20 lg:w-[105px] h-6 lg:h-7.5 rounded-full"
                   >Great Price</span>
                 <div
-                  class="bookmark absolute top-2 lg:top-5 right-2 lg:right-5 size-8 lg:size-9 flex items-center justify-center bg-white text-primary cursor-pointer rounded-full"
-                    onclick="">
+                  class="bookmark absolute top-2 lg:top-5 right-2 lg:right-5 size-8 lg:size-9 flex items-center justify-center bg-white text-primary cursor-pointer rounded-full">
                   <svg class="size-4">
                     <use href="#bookmark"></use>
                   </svg>
@@ -335,13 +415,13 @@ function renderAllVeihcles() {
               </div>
               </div>
             </div>`
-    );
-  }
+    )
+    .join("");
 }
 
-function renderCarBrandsOfSrachBox() {
+function renderCarBrandsOfSearchBox() {
   const carsMenuContainer = document.getElementById("brands-list");
-  console.log(cars);
+  // console.log(brands);
 
   carsMenuContainer.addEventListener("click", (e) => {
     if (e.target.tagName === "LI") {
@@ -352,12 +432,13 @@ function renderCarBrandsOfSrachBox() {
   for (const brand of brands) {
     carsMenuContainer.insertAdjacentHTML(
       "beforeend",
-      `<li class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md">
+      `<li class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+        data-brand-name="${brand.name}">
           ${brand.name}
           </li>`
     );
   }
-  console.log(brands);
+  // console.log(brands);
 }
 
 function renderCarModels(chosenBrand) {
@@ -367,7 +448,7 @@ function renderCarModels(chosenBrand) {
 
   label.textContent = "Any Models"; // Default Value
 
-  modelsList.innerHTML = `<li class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md">Any Models</li>`;
+  modelsList.innerHTML = `<li class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md" data-car-model="Any-Models">Any Models</li>`;
 
   for (const brand of brands) {
     if (brand.name === chosenBrand) {
@@ -375,7 +456,8 @@ function renderCarModels(chosenBrand) {
         modelsList.insertAdjacentHTML(
           "beforeend",
           `
-        <li class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md">
+        <li class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+          data-car-model="${model}">
         ${model}
         </li>`
         );
@@ -385,16 +467,18 @@ function renderCarModels(chosenBrand) {
 }
 
 function renderPopularMakers() {
-  let amountItems = 0,
+  let countItems = 0,
     contentContainer,
     popularMakers = ["bmw", "audi", "mercedes benz", "bentley"];
 
   contentContainer = document.getElementById("popular-makers-wrapper");
-  contentContainer.innerHTML = "";
 
   for (const car of cars) {
-    if (popularMakers.includes(car.manufacturer.toLowerCase())) {
-      let {
+    if (
+      popularMakers.includes(car.manufacturer.toLowerCase()) &&
+      countItems < MAX_SWIPER_ITEMS
+    ) {
+      const {
         year,
         model,
         price,
@@ -407,12 +491,11 @@ function renderPopularMakers() {
         transmission,
       } = car;
 
-      amountItems++;
+      countItems++;
 
       contentContainer.insertAdjacentHTML(
         "beforeend",
-        `
-        <div class="w-full md:w-[calc(50%-15px)] flex justify-center shrink-0 "> 
+        `<div class="w-full md:w-[calc(50%-15px)] flex justify-center shrink-0 "> 
           <div class="w-full max-w-80 xs:max-w-[566px] lg:max-w-3xl flex flex-col xs:flex-row rounded-2xl overflow-hidden">
           <div class="relative shrink-0 xs:w-[46%]">
             <img
@@ -480,35 +563,24 @@ function renderPopularMakers() {
     }
   }
 
-  contentContainer.dataset.amountItems = amountItems;
+  contentContainer.dataset.countItems = countItems;
 }
 
 function renderUserComments() {
-  let svgColorClass;
+  let svgsColorClass,
+    countItems = 0;
   const commentsWrapper = document.getElementById("comments-wrapper");
 
-  commentsWrapper.innerHTML = "";
-  commentsWrapper.dataset.amountItems = 3;
-
   for (const customer of customers) {
-    svgColorClass = [
-      "text-gray-300",
-      "text-gray-300",
-      "text-gray-300",
-      "text-gray-300",
-      "text-gray-300",
-    ];
+    if (customer.score >= 4 && countItems < 8) {
+      const { name, score, comment, profileImg, job } = customer;
+      countItems++;
 
-    for (let i = 0; i < Math.floor(customer.score); i++) {
-      svgColorClass[i] = "text-[#E1C03F]";
-    }
+      svgsColorClass = generateStarRatingClasses(score);
 
-    const { name, score, comment, profileImg, job } = customer;
-
-    commentsWrapper.insertAdjacentHTML(
-      "beforeend",
-      `
-        <div
+      commentsWrapper.insertAdjacentHTML(
+        "beforeend",
+        `<div
             class="shrink-0 w-full flex flex-col sm:flex-row gap-6 lg:gap-x-12 xl:gap-x-16 2xl:gap-x-[150px] ">
             <!-- Prfile img -->
             <div
@@ -522,19 +594,19 @@ function renderUserComments() {
                 <!-- Score -->
                 <div class="flex items-center gap-x-2.5">
                   <div class="flex gap-x-0.5">
-                    <svg class="size-4  ${svgColorClass[0]}">
+                    <svg class="size-4 ${svgsColorClass[0]}">
                       <use href="#star"></use>
                     </svg>
-                    <svg class="size-4 ${svgColorClass[1]}">
+                    <svg class="size-4 ${svgsColorClass[1]}">
                       <use href="#star"></use>
                     </svg>
-                    <svg class="size-4 ${svgColorClass[2]}">
+                    <svg class="size-4 ${svgsColorClass[2]}">
                       <use href="#star"></use>
                     </svg>
-                    <svg class="size-4 ${svgColorClass[3]}">
+                    <svg class="size-4 ${svgsColorClass[3]}">
                       <use href="#star"></use>
                     </svg>
-                    <svg class="size-4 ${svgColorClass[4]}">
+                    <svg class="size-4 ${svgsColorClass[4]}">
                       <use href="#star"></use>
                     </svg>
                   </div>
@@ -554,21 +626,26 @@ function renderUserComments() {
               </p>
             </div>
             </div>`
-    );
+      );
+    }
   }
+
+  commentsWrapper.dataset.countItems = countItems;
 }
 
 function renderCarBrands() {
+  const MAX_BRANDS = 30;
   const carBrandsWrapper = document.getElementById("car-brands-wrapper");
 
-  for (const brand of brands) {
-    carBrandsWrapper.insertAdjacentHTML(
-      "beforeend",
-      `<li>
+  carBrandsWrapper.innerHTML = brands
+    .slice(0, MAX_BRANDS)
+    .map(
+      (brand) => `
+      <li>
         <a href="javascript:void(0)"> ${brand.name} Cars </a>
       </li>`
-    );
-  }
+    )
+    .join("");
 }
 
 function renderBlogs() {
@@ -607,30 +684,88 @@ function renderBlogs() {
     );
   }
 }
+
+function btnNextSliderHandler(sliderWrapper, currentIndex) {
+  const countItems = sliderWrapper.dataset.countItems;
+  const itemsPerSlide = calcItemsPerSlide(sliderWrapper.id);
+  const maxSlides = calcMaxSlides(countItems, itemsPerSlide);
+
+  // console.log("countItems", countItems);
+  // console.log("slider ID", sliderWrapper.id);
+
+  if (currentIndex < maxSlides - 1) {
+    currentIndex++;
+    updateSlidePosition(sliderWrapper, currentIndex);
+  } else if (currentIndex === maxSlides - 1) {
+    currentIndex = 0;
+    updateSlidePosition(sliderWrapper, currentIndex);
+  }
+
+  return currentIndex;
+}
+
+function btnPrevSliderHandler(sliderWrapper, currentIndex) {
+  const countItems = sliderWrapper.dataset.countItems;
+  const itemsPerSlide = calcItemsPerSlide(sliderWrapper.id);
+  const maxSlides = calcMaxSlides(countItems, itemsPerSlide);
+
+  if (currentIndex > 0) {
+    currentIndex--;
+    updateSlidePosition(sliderWrapper, currentIndex);
+  } else if (currentIndex === 0) {
+    currentIndex = maxSlides - 1;
+    updateSlidePosition(sliderWrapper, currentIndex);
+  }
+
+  return currentIndex;
+}
+
+function renderSliders() {
+  const sliderContainers = getAllElementsByClass("slider");
+
+  for (const slider of sliderContainers) {
+    let sliderWrapper,
+      btnNext,
+      btnPrev,
+      interval,
+      currentIndex = 0;
+
+    sliderWrapper = slider.getElementsByClassName("slider__wrapper")[0];
+
+    btnNext = slider.getElementsByClassName("btn-next")[0];
+    btnPrev = slider.getElementsByClassName("btn-prev")[0];
+
+    interval = new Timer(() => {
+      currentIndex = btnNextSliderHandler(sliderWrapper, currentIndex);
+    }, 5000);
+
+    // Btn next
+    btnNext.addEventListener("click", () => {
+      console.log(interval);
+      interval.reset(() => {
+        currentIndex = btnNextSliderHandler(sliderWrapper, currentIndex);
+      }, 5000);
+
+      currentIndex = btnNextSliderHandler(sliderWrapper, currentIndex);
+    });
+
+    // Btn prev
+    btnPrev.addEventListener("click", () => {
+      interval.reset(() => {
+        currentIndex = btnNextSliderHandler(sliderWrapper, currentIndex);
+      }, 5000);
+
+      currentIndex = btnPrevSliderHandler(sliderWrapper, currentIndex);
+    });
+  }
+}
+
 // === Set Events ===
 
-window.addEventListener("DOMContentLoaded", async () => {
-  let data = await fetchData(
-    "http://127.0.0.1:5500/public/javascripts/db.json"
-  );
-
-  cars = data.cars;
-  blogs = data.blogs;
-  brands = data.brands;
-  customers = data.customers;
-
-  console.log("🚀 ~ window.addEventListener ~ comments:", customers);
-
-  renderContent();
-
-  // let params = new URLSearchParams(document.location.search);
-  // console.log("Brand", params.get("brand"));
-  // console.log("Price", params.get("price"));
-  // console.log("Model", params.get("model"));
-});
+window.addEventListener("DOMContentLoaded", init);
 
 document.body.addEventListener("click", (e) => {
-  if (e.target.className?.includes("drop-down__btn")) {
+  if (!e.target.className?.includes("drop-down__btn")) {
     removeClass("drop-down__list-item--active");
   }
 });
@@ -654,49 +789,8 @@ for (const btn of carStatusBtn) {
   });
 }
 
-searchBtn.addEventListener("click", redirectPage);
-
-openMenuIcon.addEventListener("click", openMenu);
-closeMenuIcon.addEventListener("click", closeMenu);
 bgOverlay.addEventListener("click", closeMenu);
-
-function renderSwipers() {
-  const swiperContainers = getAllElementsByClass("swiper");
-
-  for (const swiper of swiperContainers) {
-    let swiperWrapper,
-      btnNext,
-      btnPrev,
-      maxSlides,
-      currentIndex = 0;
-
-    swiperWrapper = swiper.getElementsByClassName("swiper__wrapper")[0];
-
-    btnNext = swiper.getElementsByClassName("btn-next")[0];
-    btnPrev = swiper.getElementsByClassName("btn-prev")[0];
-
-    btnNext.addEventListener("click", () => {
-      let itemsPerSlide,
-        amountItems = swiperWrapper.dataset.amountItems;
-      console.log("amountItems", amountItems);
-      console.log("Swiper ID", swiperWrapper.id);
-
-      itemsPerSlide = calcAmountItemsPerSlide(swiperWrapper.id);
-
-      maxSlides = calcMaxSlides(amountItems, itemsPerSlide);
-
-      if (currentIndex < maxSlides - 1) {
-        currentIndex++;
-        updateSlidePosition(swiperWrapper, currentIndex);
-      }
-    });
-
-    btnPrev.addEventListener("click", () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-
-        updateSlidePosition(swiperWrapper, currentIndex);
-      }
-    });
-  }
-}
+openMenuIcon.addEventListener("click", openMenu);
+searchBtn.addEventListener("click", redirectPage);
+closeMenuIcon.addEventListener("click", closeMenu);
+submenuMobileContainer.addEventListener("click", toggleSubmenu);

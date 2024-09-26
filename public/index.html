@@ -676,19 +676,32 @@
         <!-- Menu -->
         <nav class="hidden md:flex gap-x-4 lg:gap-x-7.5 font-medium">
           <ul class="flex items-center gap-x-4 lg:gap-x-7.5">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Listings</a></li>
-            <li>
-              <a href="#">Blog</a>
-              <!-- <ul>
-                <li>2024 Audi Hybrid gives up nothing with its
-                  optimized</li>
-                  <li>BMW X6 M50i is designed to exceed your
-                    sportiest.</li>
-              </ul> -->
+            <li class="flex items-center h-full"><a href="#">Home</a></li>
+            <li class="flex items-center h-full"><a href="#">Listings</a></li>
+            <li class="flex items-center h-full relative group">
+              <!-- Has Submenu -->
+              <a class="chevron-icon" href="javascript:void(0)">
+                Blog
+              </a>
+                <!-- Submenu -->
+                <ul class="absolute top-full flex flex-col bg-white text-primary px-2 py-2 rounded-md w-0 invisible opacity-0 overflow-hidden delay-75 group-hover:w-44 group-hover:opacity-100 group-hover:visible transition">
+                  <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                    The most expensive cars in 2024
+                  </a>
+                  <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                    The Fasest Car in the World
+                  </a>
+                  <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                    Bugatti vs Tesla 
+                  </a>
+                  <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                    New Rolls Royce 2024
+                  </a>
+                </ul>
+
             </li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li class="flex items-center h-full"><a href="#">About</a></li>
+            <li class="flex items-center h-full"><a href="#">Contact</a></li>
           </ul>
           <!-- Menu Right -->
           <div class="flex items-center gap-x-4 lg:gap-x-7.5">
@@ -724,7 +737,25 @@
           <ul class="flex flex-col gap-y-5">
             <li><a href="#" class="block">Home</a></li>
             <li><a href="#" class="block">Listings</a></li>
-            <li><a href="#" class="block">Blog</a></li>
+            <!-- Has Submenu -->
+            <li class="relative" id="submenu-mobile-container">
+              <a href="#" class="block chevron-icon">Blog</a>
+              <!-- Submenu -->
+              <ul class="submenu-mobile">
+                <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                  The most expensive cars in 2024
+                </a>
+                <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                  The Fasest Car in the World
+                </a>
+                <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                  Bugatti vs Tesla 
+                </a>
+                <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                  New Rolls Royce 2024
+                </a>
+              </ul>
+            </li>
             <li><a href="#" class="block">About</a></li>
             <li><a href="#" class="block">Contact</a></li>
           </ul>
@@ -770,13 +801,13 @@
               <div
                 class="drop-down w-full md:w-1/4 relative sm:px-5 md:pr-8 md:pl-7.5 sm:border-r border-[#E9E9E9]"
               >
-                <label type="button" class="drop-down__btn flex items-center" id="label-maker">
+                <label type="button" class="drop-down__btn chevron-icon cursor-pointer flex items-center" id="label-maker">
                   Any Makers
                 </label>
                 <ul class="drop-down__list-item" id="brands-list">
                   <!-- Car Makers -->
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     Any Makers
                   </li>
@@ -786,13 +817,13 @@
               <div
                 class="drop-down w-full md:w-1/4 relative sm:px-5 md:pr-8 md:pl-7.5 sm:border-r border-[#E9E9E9]"
               >
-                <label type="button" class="drop-down__btn flex items-center" id="label-model">
+                <label type="button" class="drop-down__btn chevron-icon cursor-pointer flex items-center" id="label-model">
                   Any Models
                 </label>
                 <ul class="drop-down__list-item" id="models-list">
                   <!-- Car Models -->
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     Any Models
                   </li>
@@ -802,63 +833,63 @@
               <div
                 class="drop-down w-full md:w-1/4 relative sm:px-5 md:pr-8 md:pl-7.5"
               >
-                <label type="button" class="drop-down__btn flex items-center" id="label-price">
+                <label type="button" class="drop-down__btn chevron-icon cursor-pointer flex items-center" id="label-price">
                   All Prices
                 </label>
                 <ul class="drop-down__list-item">
                   <!-- Car Prices -->
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     All Prices
                   </li>
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $0 - $10K
                   </li>
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $10K - $20K
                   </li>
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $20K - $30K
                   </li>
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $30K - $40K
                   </li>
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $40K - $50K
                   </li>
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $50K - $60K
                   </li>
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $60K - $70K
                   </li>
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $70K - $80K
                   </li>
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $80K - $90K
                   </li>
                   <li
-                    class="px-2 md:px-2.5 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $100K+
                   </li>
@@ -992,10 +1023,10 @@
             <button class="pb-2.5">New Cars</button>
             <button class="pb-2.5">Used Cars</button>
           </div>
-          <div class="swiper overflow-x-hidden w-full">
+          <div class="slider overflow-x-hidden w-full">
             <div
-            class="swiper__wrapper flex gap-x-4 md:gap-x-7.5 my-10 md:my-12.5 transition duration-700 ease-in-out"
-            data-amount-items=""
+            class="slider__wrapper flex gap-x-4 md:gap-x-7.5 my-10 md:my-12.5 transition duration-700 ease-in-out"
+            data-count-items=""
             id="all-vehicles-wrapper"
             >   
             <!-- All Vehicles -->
@@ -1247,10 +1278,10 @@
             <button class="pb-2.5">Mercedes Benz</button>
           </div>
           <!-- Poducts -->
-        <div class="swiper overflow-x-hidden w-full">
+        <div class="slider overflow-x-hidden w-full">
           <div
-          class="swiper__wrapper flex gap-x-4 md:gap-x-7.5 my-10 md:my-12.5 transition duration-700 ease-in-out"
-          data-amount-items=""
+          class="slider__wrapper flex gap-x-4 md:gap-x-7.5 my-10 md:my-12.5 transition duration-700 ease-in-out"
+          data-count-items=""
           id="popular-makers-wrapper"
           >   
           <!-- Popular Makers -->
@@ -1330,10 +1361,10 @@
             </span>
           </div>
           <!-- Comments Container -->
-          <div class="swiper xs:w-[73vw] max-w-full mx-auto mt-15 relative">
+          <div class="slider xs:w-[73vw] max-w-full mx-auto mt-15 relative">
             <div class="overflow-hidden">
 
-              <div class="swiper__wrapper flex gap-x-4 md:gap-x-7.5 transition duration-700 ease-in-out" id="comments-wrapper">   
+              <div class="slider__wrapper flex gap-x-4 md:gap-x-7.5 transition duration-700 ease-in-out" id="comments-wrapper">   
               <!-- Comments -->
           </div>
             <!-- Pagination -->
