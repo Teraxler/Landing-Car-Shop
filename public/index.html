@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <!-- set domain  -->
+    <link rel="canonical" href="http://127.0.0.1:5500/public/" />
+
     <title>BOXCARS</title>
     <link rel="shortcut icon" href="./images/logo/logo.svg" type="image/svg" />
     <!-- Styles -->
@@ -249,7 +254,7 @@
           stroke-linejoin="round"
           d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
         />
-      </symbol>  
+      </symbol>
       <symbol
         id="bookmark-solid"
         xmlns="http://www.w3.org/2000/svg"
@@ -680,25 +685,36 @@
             <li class="flex items-center h-full"><a href="#">Listings</a></li>
             <li class="flex items-center h-full relative group">
               <!-- Has Submenu -->
-              <a class="chevron-icon" href="javascript:void(0)">
-                Blog
-              </a>
-                <!-- Submenu -->
-                <ul class="absolute top-full flex flex-col bg-white text-primary px-2 py-2 rounded-md w-0 invisible opacity-0 overflow-hidden delay-75 group-hover:w-44 group-hover:opacity-100 group-hover:visible transition">
-                  <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
-                    The most expensive cars in 2024
-                  </a>
-                  <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
-                    The Fasest Car in the World
-                  </a>
-                  <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
-                    Bugatti vs Tesla 
-                  </a>
-                  <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
-                    New Rolls Royce 2024
-                  </a>
-                </ul>
-
+              <a class="chevron-icon" href="javascript:void(0)"> Blog </a>
+              <!-- Submenu -->
+              <ul
+                class="absolute top-full flex flex-col bg-white text-primary px-2 py-2 rounded-md w-0 invisible opacity-0 overflow-hidden delay-75 group-hover:w-44 group-hover:opacity-100 group-hover:visible transition"
+              >
+                <a
+                  class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all"
+                  href="javascript:void(0)"
+                >
+                  The most expensive cars in 2024
+                </a>
+                <a
+                  class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all"
+                  href="javascript:void(0)"
+                >
+                  The Fasest Car in the World
+                </a>
+                <a
+                  class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all"
+                  href="javascript:void(0)"
+                >
+                  Bugatti vs Tesla
+                </a>
+                <a
+                  class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all"
+                  href="javascript:void(0)"
+                >
+                  New Rolls Royce 2024
+                </a>
+              </ul>
             </li>
             <li class="flex items-center h-full"><a href="#">About</a></li>
             <li class="flex items-center h-full"><a href="#">Contact</a></li>
@@ -742,16 +758,28 @@
               <a href="#" class="block chevron-icon">Blog</a>
               <!-- Submenu -->
               <ul class="submenu-mobile">
-                <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                <a
+                  class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all"
+                  href="javascript:void(0)"
+                >
                   The most expensive cars in 2024
                 </a>
-                <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                <a
+                  class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all"
+                  href="javascript:void(0)"
+                >
                   The Fasest Car in the World
                 </a>
-                <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
-                  Bugatti vs Tesla 
+                <a
+                  class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all"
+                  href="javascript:void(0)"
+                >
+                  Bugatti vs Tesla
                 </a>
-                <a class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all" href="javascript:void(0)">
+                <a
+                  class="px-2 py-px line-clamp-1 rounded-md hover:bg-secondary hover:text-white transition-all"
+                  href="javascript:void(0)"
+                >
                   New Rolls Royce 2024
                 </a>
               </ul>
@@ -801,13 +829,19 @@
               <div
                 class="drop-down w-full md:w-1/4 relative sm:px-5 md:pr-8 md:pl-7.5 sm:border-r border-[#E9E9E9]"
               >
-                <label type="button" class="drop-down__btn chevron-icon cursor-pointer flex items-center" id="label-maker">
+                <label
+                  type="button"
+                  class="drop-down__btn chevron-icon cursor-pointer flex items-center"
+                  id="label-maker"
+                  data-value="Any Makers"
+                >
                   Any Makers
                 </label>
                 <ul class="drop-down__list-item" id="brands-list">
                   <!-- Car Makers -->
                   <li
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    data-value="Any Makers"
                   >
                     Any Makers
                   </li>
@@ -817,13 +851,19 @@
               <div
                 class="drop-down w-full md:w-1/4 relative sm:px-5 md:pr-8 md:pl-7.5 sm:border-r border-[#E9E9E9]"
               >
-                <label type="button" class="drop-down__btn chevron-icon cursor-pointer flex items-center" id="label-model">
+                <label
+                  type="button"
+                  class="drop-down__btn chevron-icon cursor-pointer flex items-center"
+                  id="label-model"
+                  data-value="Any Models"
+                >
                   Any Models
                 </label>
                 <ul class="drop-down__list-item" id="models-list">
                   <!-- Car Models -->
                   <li
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    data-value="Any Models"
                   >
                     Any Models
                   </li>
@@ -833,62 +873,78 @@
               <div
                 class="drop-down w-full md:w-1/4 relative sm:px-5 md:pr-8 md:pl-7.5"
               >
-                <label type="button" class="drop-down__btn chevron-icon cursor-pointer flex items-center" id="label-price">
+                <label
+                  type="button"
+                  class="drop-down__btn chevron-icon cursor-pointer flex items-center"
+                  id="label-price"
+                  data-value="All Prices"
+                >
                   All Prices
                 </label>
                 <ul class="drop-down__list-item">
                   <!-- Car Prices -->
                   <li
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
+                    data-value="All Prices"
                   >
                     All Prices
                   </li>
                   <li
+                    data-value="$0-$10K"
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $0 - $10K
                   </li>
                   <li
+                    data-value="$10K-$20K"
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $10K - $20K
                   </li>
                   <li
+                    data-value="$20K-$30K"
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $20K - $30K
                   </li>
                   <li
+                    data-value="$30K-$40K"
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $30K - $40K
                   </li>
                   <li
+                    data-value="$40K-$50K"
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $40K - $50K
                   </li>
                   <li
+                    data-value="$50K-$60K"
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $50K - $60K
                   </li>
                   <li
+                    data-value="$60K-$70K"
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $60K - $70K
                   </li>
                   <li
+                    data-value="$70K-$80K"
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $70K - $80K
                   </li>
                   <li
+                    data-value="$80K-$90K"
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $80K - $90K
                   </li>
                   <li
+                    data-value="$100K+"
                     class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
                   >
                     $100K+
@@ -990,8 +1046,8 @@
           <div
             class="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-[30px] mt-7 md:mt-10 text-base md:text-lg/[21.6px] font-medium"
             id="permium-brands-wrappper"
-            >
-          <!-- Permium Brands -->
+          >
+            <!-- Permium Brands -->
           </div>
         </div>
       </section>
@@ -1025,24 +1081,24 @@
           </div>
           <div class="slider overflow-x-hidden w-full">
             <div
-            class="slider__wrapper flex gap-x-4 md:gap-x-7.5 my-10 md:my-12.5 transition duration-700 ease-in-out"
-            data-count-items=""
-            id="all-vehicles-wrapper"
-            >   
-            <!-- All Vehicles -->
-          </div>
-          <div class="flex gap-6 text-primary">
-            <div class="chevron-btn btn-prev">
-              <svg class="size-4 rotate-180">
-                <use href="#chevron-right"></use>
-              </svg>
+              class="slider__wrapper flex gap-x-4 md:gap-x-7.5 my-10 md:my-12.5 transition duration-700 ease-in-out"
+              data-count-items=""
+              id="all-vehicles-wrapper"
+            >
+              <!-- All Vehicles -->
             </div>
-            <div class="chevron-btn btn-next">
-              <svg class="size-4">
-                <use href="#chevron-right"></use>
-              </svg>
+            <div class="flex gap-6 text-primary">
+              <div class="chevron-btn btn-prev">
+                <svg class="size-4 rotate-180">
+                  <use href="#chevron-right"></use>
+                </svg>
+              </div>
+              <div class="chevron-btn btn-next">
+                <svg class="size-4">
+                  <use href="#chevron-right"></use>
+                </svg>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </section>
@@ -1051,7 +1107,7 @@
         class="mt-16 md:mt-30 md:mb-10 pb-10 md:pb-[55px] border-b border-gray-300"
       >
         <div
-          class="w-full sm:w-[88.5%] px-4 sm:px-0 mx-auto xs:max-w-[480px] sm:max-w-2xl md:max-w-full 2xl:max-w-[1720px] "
+          class="w-full sm:w-[88.5%] px-4 sm:px-0 mx-auto xs:max-w-[480px] sm:max-w-2xl md:max-w-full 2xl:max-w-[1720px]"
         >
           <div
             class="flex flex-col lg:flex-row max-w-[625px] lg:max-w-full lg:h-[510px] xl:h-[600px] mx-auto rounded-xl overflow-hidden"
@@ -1278,27 +1334,27 @@
             <button class="pb-2.5">Mercedes Benz</button>
           </div>
           <!-- Poducts -->
-        <div class="slider overflow-x-hidden w-full">
-          <div
-          class="slider__wrapper flex gap-x-4 md:gap-x-7.5 my-10 md:my-12.5 transition duration-700 ease-in-out"
-          data-count-items=""
-          id="popular-makers-wrapper"
-          >   
-          <!-- Popular Makers -->
-        </div>
-          <!-- Pagination -->
-          <div class="flex gap-6">
-            <div class="btn-prev chevron-btn chevron-btn--dark">
-              <svg class="size-4 rotate-180">
-                <use href="#chevron-right"></use>
-              </svg>
+          <div class="slider overflow-x-hidden w-full">
+            <div
+              class="slider__wrapper flex gap-x-4 md:gap-x-7.5 my-10 md:my-12.5 transition duration-700 ease-in-out"
+              data-count-items=""
+              id="popular-makers-wrapper"
+            >
+              <!-- Popular Makers -->
             </div>
-            <div class="btn-next chevron-btn chevron-btn--dark">
-              <svg class="size-4">
-                <use href="#chevron-right"></use>
-              </svg>
+            <!-- Pagination -->
+            <div class="flex gap-6">
+              <div class="btn-prev chevron-btn chevron-btn--dark">
+                <svg class="size-4 rotate-180">
+                  <use href="#chevron-right"></use>
+                </svg>
+              </div>
+              <div class="btn-next chevron-btn chevron-btn--dark">
+                <svg class="size-4">
+                  <use href="#chevron-right"></use>
+                </svg>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </section>
@@ -1338,7 +1394,7 @@
           <ul
             class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 md:gap-x-7.5 gap-y-2.5 mt-[35px] text-sm lg:text-parent child:line-clamp-1"
             id="car-brands-wrapper"
-            >
+          >
             <!-- All Car Brands -->
           </ul>
         </div>
@@ -1363,29 +1419,29 @@
           <!-- Comments Container -->
           <div class="slider xs:w-[73vw] max-w-full mx-auto mt-15 relative">
             <div class="overflow-hidden">
-
-              <div class="slider__wrapper flex gap-x-4 md:gap-x-7.5 transition duration-700 ease-in-out" id="comments-wrapper">   
-              <!-- Comments -->
-          </div>
-            <!-- Pagination -->
-            <div
-              class="btn-prev chevron-btn bg-white border-gray-200 absolute top-0 bottom-0 my-auto left-0 xs:left-1 sm:-left-4 lg:-left-10 xs:-translate-x-full"
-            >
-              <svg class="size-4 rotate-180">
-                <use href="#chevron-right"></use>
-              </svg>
+              <div
+                class="slider__wrapper flex gap-x-4 md:gap-x-7.5 transition duration-700 ease-in-out"
+                id="comments-wrapper"
+              >
+                <!-- Comments -->
+              </div>
+              <!-- Pagination -->
+              <div
+                class="btn-prev chevron-btn bg-white border-gray-200 absolute top-0 bottom-0 my-auto left-0 xs:left-1 sm:-left-4 lg:-left-10 xs:-translate-x-full"
+              >
+                <svg class="size-4 rotate-180">
+                  <use href="#chevron-right"></use>
+                </svg>
+              </div>
+              <div
+                class="btn-next chevron-btn bg-white border-gray-200 absolute top-0 bottom-0 my-auto right-0 xs:right-1 sm:-right-4 lg:-right-10 xs:translate-x-full"
+              >
+                <svg class="size-4">
+                  <use href="#chevron-right"></use>
+                </svg>
+              </div>
             </div>
-            <div
-              class="btn-next chevron-btn bg-white border-gray-200 absolute top-0 bottom-0 my-auto right-0 xs:right-1 sm:-right-4 lg:-right-10 xs:translate-x-full"
-            >
-              <svg class="size-4">
-                <use href="#chevron-right"></use>
-              </svg>
-            </div>
           </div>
-
-          </div>
-          
         </div>
       </section>
       <!-- Section Blogs -->

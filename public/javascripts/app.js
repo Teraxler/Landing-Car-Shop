@@ -39,6 +39,15 @@ async function fetchData(url, options) {
 }
 
 async function init() {
+  let params;
+  params = new URLSearchParams(window.location.search);
+
+  console.log(window.location.search);
+  
+  console.log(params.get("brand"));
+  console.log(params.get("model"));
+  console.log(params.get("price-range"));
+
   try {
     const data = await fetchData(API_URL);
     ({ cars, brands, blogs, customers } = data);
@@ -121,6 +130,16 @@ function numberSeparator(num) {
   return strNum[0] + result;
 }
 
+function normalizeUrl(url) {
+  url = url.trim();
+
+  while (url.includes(" ")) {
+    url = url.replace(" ", "-");
+  }
+
+  return url;
+}
+
 // Main Functions
 function selectDropDownItem(event) {
   let label,
@@ -129,10 +148,13 @@ function selectDropDownItem(event) {
   console.log(target);
   if (target.tagName === "LI") {
     label = event.target.parentElement.previousElementSibling;
-    console.log(event.target.textContent);
+    // console.log(event.target.textContent);
 
-    console.log(label);
+    // console.log("event.target.value",event.target.dataset.value);
     label.textContent = event.target.textContent;
+    label.dataset.value = event.target.dataset.value;
+    console.log("🚀 ~ selectDropDownItem ~ label:", label);
+
     removeClass("drop-down__list-item--active");
     // return event.target.textContent
   }
@@ -163,33 +185,20 @@ function redirectPage() {
 
   let price, model, brand;
 
-  brand = labelMaker.textContent;
-  model = labelModel.textContent;
-  price = labelPrice.textContent;
+  console.log("🚀 ~ redirectPage ~ labelMaker:", labelMaker);
+  console.log("🚀 ~ redirectPage ~ labelModel:", labelModel);
+  console.log("🚀 ~ redirectPage ~ labelPrice:", labelPrice);
+  brand = labelMaker.dataset.value.toLocaleLowerCase();
+  model = labelModel.dataset.value.toLocaleLowerCase();
+  price = labelPrice.dataset.value.toLocaleLowerCase();
 
   // console.log(normalizeUrl(`http://127.0.0.1:5500/public/index.html?brand=${brand}&model=${model}&price=${price}`));
-  console.log(
-    normalizeUrl(
-      `http://127.0.0.1:5500/public/index.html?${brand}-${model}-${price}`
-    )
-  );
 
   location.replace(
-    // normalizeUrl(
-      `http://127.0.0.1:5500/public/index.html?${brand.trim()}-${model.trim()}-${price.trim()}`
-    // )
+    normalizeUrl(
+      `http://127.0.0.1:5500/public/index.html?brand=${brand}&model=${model}&price-range=${price}`
+    )
   );
-}
-
-// Need refactor ***
-function normalizeUrl(url) {
-  url = url.trim();
-
-  while (url.includes(" ")) {
-    url = url.replace(" ", "");
-  }
-
-  return url;
 }
 
 function updateSlidePosition(sliderWrapper, currentIndex) {
@@ -433,7 +442,7 @@ function renderCarBrandsOfSearchBox() {
     carsMenuContainer.insertAdjacentHTML(
       "beforeend",
       `<li class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
-        data-brand-name="${brand.name}">
+        data-value="${brand.name}">
           ${brand.name}
           </li>`
     );
@@ -448,7 +457,7 @@ function renderCarModels(chosenBrand) {
 
   label.textContent = "Any Models"; // Default Value
 
-  modelsList.innerHTML = `<li class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md" data-car-model="Any-Models">Any Models</li>`;
+  modelsList.innerHTML = `<li class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md" data-value="Any-Models">Any Models</li>`;
 
   for (const brand of brands) {
     if (brand.name === chosenBrand) {
@@ -457,7 +466,7 @@ function renderCarModels(chosenBrand) {
           "beforeend",
           `
         <li class="px-2 md:px-2.5 md:py-px line-clamp-1 hover:bg-secondary hover:text-white transition-colors cursor-pointer rounded-md"
-          data-car-model="${model}">
+          data-value="${model}">
         ${model}
         </li>`
         );
