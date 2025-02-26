@@ -19,7 +19,7 @@ const submenuMobileContainer = document.getElementById(
 );
 
 //
-const API_URL = "http://127.0.0.1:5500/public/javascripts/db.json";
+const API_URL = "./javascripts/db.json";
 const MAX_BRANDS_COUNT = 6;
 const MAX_SWIPER_ITEMS = 12;
 
@@ -148,15 +148,11 @@ function selectDropDownItem(event) {
   console.log(target);
   if (target.tagName === "LI") {
     label = event.target.parentElement.previousElementSibling;
-    // console.log(event.target.textContent);
 
-    // console.log("event.target.value",event.target.dataset.value);
     label.textContent = event.target.textContent;
     label.dataset.value = event.target.dataset.value;
-    console.log("🚀 ~ selectDropDownItem ~ label:", label);
 
     removeClass("drop-down__list-item--active");
-    // return event.target.textContent
   }
 }
 
@@ -164,7 +160,6 @@ function openDropDown(e) {
   removeClass("drop-down__list-item--active");
 
   let submenu = e.currentTarget.nextElementSibling;
-
   submenu.classList.add("drop-down__list-item--active");
 }
 
@@ -192,18 +187,15 @@ function redirectPage() {
   model = labelModel.dataset.value.toLocaleLowerCase();
   price = labelPrice.dataset.value.toLocaleLowerCase();
 
-  // console.log(normalizeUrl(`http://127.0.0.1:5500/public/index.html?brand=${brand}&model=${model}&price=${price}`));
-
   location.replace(
     normalizeUrl(
-      `http://127.0.0.1:5500/public/index.html?brand=${brand}&model=${model}&price-range=${price}`
+      `./index.html?brand=${brand}&model=${model}&price-range=${price}`
     )
   );
 }
 
 function updateSlidePosition(sliderWrapper, currentIndex) {
   let gap = 16;
-  // console.log(window.innerWidth);
 
   window.innerWidth >= 768 ? (gap = 30) : (gap = 16);
 
@@ -271,24 +263,18 @@ function calcItemsPerSlide(sliderId) {
 
     if (windowWidth >= 1280) {
       itemsPerSlide = 4;
-      // console.log("items", itemsPerSlide);
     } else if (windowWidth >= 768) {
       itemsPerSlide = 3;
-      // console.log("items", itemsPerSlide);
     } else if (windowWidth >= 480) {
       itemsPerSlide = 2;
-      // console.log("items", itemsPerSlide);
     } else {
       itemsPerSlide = 1;
-      // console.log("items", itemsPerSlide);
     }
   } else if (sliderId === "popular-makers-wrapper") {
     if (windowWidth >= 768) {
       itemsPerSlide = 2;
-      // console.log("items", itemsPerSlide);
     } else {
       itemsPerSlide = 1;
-      // console.log("items", itemsPerSlide);
     }
   } else if (sliderId === "comments-wrapper") {
     itemsPerSlide = 1;
@@ -313,7 +299,6 @@ function renderContent() {
   renderFunctions.forEach((fn) => fn());
 
   const bookmarks = getAllElementsByClass("bookmark");
-  // console.log("🚀 ~ renderContent ~ bookmarks:", bookmarks)
 
   bookmarks.forEach((bookmark) => {
     bookmark.addEventListener("click", toggleBookmarkIcon);
